@@ -44,43 +44,56 @@ int ifBit3is1(int v)
 
 int unsignedBits0through5(int v)
 {
-	// return the unsigned value in bits 0 through 5
-	int i = v;
-	i = i >> 5;
-	i = i << 5;
-	v = v - i;
-	return v;
+	// return the unsigned value in bits 0 through 5 0011011011010
+	
+	return v & 0x3f;
 }
 
 int unsignedBits6through9(int v)
 {
 	// return the unsigned value in bits 6 through 9
-	int i,j = v;
-	i = i >> 6;
-	i = i << 6;
-	j = j >> 9;
-	j = j << 9;
-	v = v - i - j;
-	v = v >> 6;
-	return v;
+
+	return v& 0x3c0;
 }
 
-int signedBits0through5(int v)
+signed int signedBits0through5(int v)
 {
 	// return the signed value in bits 0 through 5
-	return v;
+	if((v & 0x3f) & 0x20)
+	{
+		return (v & 0x3f) | 0xffffffc0;
+	}
+	else
+	{
+		return v & 0x3f;
+	}
+
 }
 
 int signedBits6through9(int v)
 {
 	// return the signed value in bits 6 through 9
-	return v;
+	if((v & 0x3f) & 0x20)
+	{
+		return (v & 0x3f) | 0xfffffc3f;
+	}
+	else
+	{
+		return v & 0x3c0;
+	}
 }
 
 int setBits4through9(int v, int setValue)
 {
 	// set bits 4 through 9 in v to become setValue
-	return v;
+	if((setValue & 0x3f) & 0x20)
+	{
+		return (v & 0x3f) | (setValue << 4);
+	}
+	else
+	{
+		return v & 0x3c0;
+	}
 }
 
 
